@@ -7,7 +7,7 @@ var objRole1 = {
 var objRole2 = { 
   Id: 2, 
   Name: 'Location Manager', 
-  Parent: 1 
+  Parent: 1
 };
 
 var objRole3 = {
@@ -40,21 +40,22 @@ user.addEventListener("change", function() {
 
   } else {
   
-//Find to get the parentID from Element
+  //Find the parentID from Element
     var parent = roles.find(obj => obj.Name == result);
     var parentId = parent.Id;
 
-//Filter roles
-    const found = roles.filter(function(element) {
-      return element.Id > parentId;
-    });
-    
-//Display roles
-    var results = [];
+  //Display subordinates
+    var subordinates =[];
+    for(i=0 ; i < roles.length ; i++) {
+      while (roles[i].Parent === parentId) {
+        subordinates.push(roles[i].Name);
+        var subordinatesAsString = subordinates.join(', ');
 
-    for(let i = 0; i < found.length; i++) {
-      results.push(found[i].Name);
-     }
-     document.getElementById("subordinates").innerHTML = results; 
+        parentId = roles[i].Id;
+        
+        document.getElementById("subordinates").innerHTML = subordinatesAsString;
+
+      }
+    }
   };
 });
